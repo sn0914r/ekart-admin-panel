@@ -1,14 +1,32 @@
+import { logger } from "../utils/logger";
+import { auth } from "./firebase";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 const request = async (endpoint, options = {}) => {
   try {
+    await auth.authStateReady();
+    const user = auth.currentUser;
+    let token = null;
+    if (user) {
+      token = await user.getIdToken();
+      logger.info("Auth token acquired:" + (token ? "Yes" : "No"));
+    } else {
+      logger.info("No user found in auth state.");
+    }
+
+    const headers = {
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...options.headers,
+    };
+
+    if (!(options.body instanceof FormData)) {
+      headers["Content-Type"] = "application/json";
+    }
+
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
       ...options,
+      headers,
     });
 
     const result = await response.json();
@@ -22,6 +40,7 @@ const request = async (endpoint, options = {}) => {
 
       throw error;
     }
+    logger.info("api response data", result.data);
 
     return {
       data: result.data,
@@ -46,12 +65,17 @@ export default {
   post: (endpoint, body) =>
     request(endpoint, {
       method: "POST",
-      body: JSON.stringify(body),
+      body: body instanceof FormData ? body : JSON.stringify(body),
     }),
   put: (endpoint, body) =>
     request(endpoint, {
       method: "PUT",
-      body: JSON.stringify(body),
+      body: body instanceof FormData ? body : JSON.stringify(body),
+    }),
+  patch: (endpoint, body) =>
+    request(endpoint, {
+      method: "PATCH",
+      body: body instanceof FormData ? body : JSON.stringify(body),
     }),
   delete: (endpoint) => request(endpoint, { method: "DELETE" }),
 };

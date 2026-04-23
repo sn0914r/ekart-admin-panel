@@ -1,0 +1,72 @@
+/* ── Light mode (default) ── */
+:root {
+  --bg:          #f5f4f0;   /* page background */
+  --surface:     #ffffff;   /* card / sidebar background */
+  --surface2:    #ededea;   /* hover states, secondary fills */
+  --border:      #e0dfd9;   /* all borders */
+  --text:        #18181b;   /* primary text */
+  --muted:       #71717a;   /* secondary / label text */
+
+  /* accent — used for active nav, icon fills, info badges */
+  --accent:      #4f46e5;
+  --accent-light:#eef2ff;   /* accent background tint */
+
+  /* status badge backgrounds + text */
+  --badge-green-bg:   #dcfce7;
+  --badge-green-text: #166534;
+  --badge-amber-bg:   #fef9c3;
+  --badge-amber-text: #854d0e;
+  --badge-red-bg:     #fee2e2;
+  --badge-red-text:   #991b1b;
+}
+
+/* ── Dark mode ── */
+.dark {
+  --bg:          #0f0f11;
+  --surface:     #18181b;
+  --surface2:    #27272a;
+  --border:      #3f3f46;
+  --text:        #fafafa;
+  --muted:       #a1a1aa;
+
+  --accent:      #818cf8;
+  --accent-light:#1e1b4b;
+
+  --badge-green-bg:   #14532d;
+  --badge-green-text: #86efac;
+  --badge-amber-bg:   #451a03;
+  --badge-amber-text: #fcd34d;
+  --badge-red-bg:     #450a0a;
+  --badge-red-text:   #fca5a5;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Geist', 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* ── Global Scrollbars ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-light);
+  border-radius: 4px;
+}
