@@ -1,122 +1,56 @@
-import { useState } from "react";
-import {
-  useProductsQuery,
-  useDeleteProductMutation,
-  useUpdateProductMutation,
-} from "../products.query";
+import { Plus } from "lucide-react";
 import ProductFormModal from "../components/ProductFormModal";
 import ProductTable from "../components/ProductTable";
 import ConfirmModal from "../../../shared/components/ConfirmModal/ConfirmModal";
-import { toast } from "sonner";
-import { Plus, Search, Calendar, ChevronDown } from "lucide-react";
-import {
-  PageLayout,
-  MainContentWrapper,
-  TopArea,
-  TitleSection,
-  PageTitle,
-  PageSubtitle,
-  ControlsSection,
-  SearchInputWrapper,
-  StyledInput,
-  FilterButton,
-  AddButton,
-} from "./ProductsPage.styles";
 import Loader from "../../../shared/components/Loader/Loader";
+import { useProductsPageFlow } from "../hooks/ui/useProductsPageFlow";
+import * as S from "./ProductsPage.styles";
 
 const ProductsPage = () => {
-  const { data: response, isLoading, isError, error } = useProductsQuery();
-  const deleteMutation = useDeleteProductMutation();
-  const updateMutation = useUpdateProductMutation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
-  const [productToDelete, setProductToDelete] = useState(null);
-
-  const handleToggleStatus = (product) => {
-    toast.info("Updating status...");
-    const newStatus = !product.isActive;
-    updateMutation.mutate(
-      {
-        id: product._id,
-        payload: { ...product, isActive: newStatus },
-      },
-      {
-        onSuccess: () => {
-          toast.success(
-            `Product successfully ${newStatus ? "activated" : "deactivated"}!`,
-          );
-        },
-        onError: () => {
-          toast.error("Failed to update status");
-        },
-      },
-    );
-  };
-
-  const handleAdd = () => {
-    setEditingProduct(null);
-    setIsModalOpen(true);
-  };
-
-  const handleEdit = (product) => {
-    setEditingProduct(product);
-    setIsModalOpen(true);
-  };
-
-  const handleDeleteClick = (product) => {
-    setProductToDelete(product);
-  };
-
-  const handleConfirmDelete = () => {
-    if (productToDelete) {
-      deleteMutation.mutate(productToDelete._id, {
-        onSuccess: () => {
-          setProductToDelete(null);
-        },
-      });
-    }
-  };
+  const {
+    products,
+    isLoading,
+    isError,
+    error,
+    isModalOpen,
+    setIsModalOpen,
+    editingProduct,
+    productToDelete,
+    setProductToDelete,
+    handleToggleStatus,
+    handleAdd,
+    handleEdit,
+    handleDeleteClick,
+    handleConfirmDelete,
+    isDeleting,
+  } = useProductsPageFlow();
 
   if (isLoading) return <Loader />;
+  
   if (isError)
     return (
-      <div style={{ color: "var(--badge-red-text)", padding: "24px" }}>
+      <S.ErrorWrapper>
         Failed to load products: {error.message}
-      </div>
+      </S.ErrorWrapper>
     );
 
-  const products = response?.data || [];
-
   return (
-    <PageLayout>
-      <MainContentWrapper>
-        <TopArea>
-          <TitleSection>
-            <PageTitle>Products</PageTitle>
-            <PageSubtitle>
+    <S.PageLayout>
+      <S.MainContentWrapper>
+        <S.TopArea>
+          <S.TitleSection>
+            <S.PageTitle>Products</S.PageTitle>
+            <S.PageSubtitle>
               Manage your product catalog and inventory
-            </PageSubtitle>
-          </TitleSection>
+            </S.PageSubtitle>
+          </S.TitleSection>
 
-          <ControlsSection>
-            {/* <SearchInputWrapper>
-              <Search size={16} color="var(--muted)" />
-              <StyledInput type="text" placeholder="Search" />
-            </SearchInputWrapper> */}
-
-            {/* <FilterButton>
-              Date Range <Calendar size={14} />
-            </FilterButton>
-            
-            <FilterButton>
-              Category <ChevronDown size={14} />
-            </FilterButton> */}
-
-            <AddButton onClick={handleAdd}>
+          <S.ControlsSection>
+            <S.AddButton onClick={handleAdd}>
               <Plus size={16} /> Add Product
-            </AddButton>
-          </ControlsSection>
-        </TopArea>
+            </S.AddButton>
+          </S.ControlsSection>
+        </S.TopArea>
 
         <ProductTable
           products={products}
@@ -124,7 +58,7 @@ const ProductsPage = () => {
           onDelete={handleDeleteClick}
           onToggleStatus={handleToggleStatus}
         />
-      </MainContentWrapper>
+      </S.MainContentWrapper>
 
       <ProductFormModal
         isOpen={isModalOpen}
@@ -140,10 +74,10 @@ const ProductsPage = () => {
         message={`Are you sure you want to delete "${productToDelete?.name}"?`}
         subMessage="This item will be permanently removed from your catalog. This action cannot be undone."
         confirmText="Yes, Delete"
-        isLoading={deleteMutation.isPending}
+        isLoading={isDeleting}
         isDestructive={true}
       />
-    </PageLayout>
+    </S.PageLayout>
   );
 };
 

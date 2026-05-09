@@ -129,3 +129,14 @@ export const AddButton = styled.button`
     box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
   }
 `;
+
+export const ErrorWrapper = styled.div`
+  color: var(--badge-red-text);
+  padding: 24px;
+  background: var(--surface);
+  margin: 24px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  text-align: center;
+  font-weight: 500;
+`;

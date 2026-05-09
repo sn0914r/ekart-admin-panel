@@ -1,131 +1,147 @@
-import { logger } from "../utils/logger";
-import { useAuthStore } from "../store/authStore";
+import { logger } from "@utils/logger";
+import { useAuthStore } from "@app/store/authStore";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+// ----------------------------------- REFRESH TOKEN STATE -----------------------------------
 
 let isRefreshing = false;
-let refreshSubscribers = [];
+let failedQueue = [];
 
-const onTokenRefreshed = (token) => {
-  refreshSubscribers.map((callback) => callback(token));
-  refreshSubscribers = [];
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((promise) => {
+    if (error) promise.reject(error);
+    else promise.resolve(token);
+  });
+  failedQueue = [];
 };
 
-const addRefreshSubscriber = (callback) => {
-  refreshSubscribers.push(callback);
-};
+// ----------------------------------- PRIVATE HELPERS -----------------------------------
 
-const request = async (endpoint, options = {}) => {
+function prepareConfig(accessToken, options) {
+  const isFormData = options.body instanceof FormData;
+
+  const headers = {
+    ...(!isFormData && { "Content-Type": "application/json" }),
+    ...(options.headers || {}),
+    ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+  };
+
+  return {
+    ...options,
+    headers,
+    credentials: "include",
+    body: formatRequestBody(options.body, isFormData),
+  };
+}
+
+function formatRequestBody(body, isFormData) {
+  if (!body || isFormData || typeof body === "string") return body;
+  return JSON.stringify(body);
+}
+
+async function parseJSON(response) {
+  const data = await response.json().catch(() => null);
+  return data;
+}
+
+function isTokenExpired(response, data) {
+  return response.status === 401 && data?.errorCode === "INVALID_TOKEN";
+}
+
+function isErrorResponse(response, data) {
+  return !response.ok || (data && data.success === false);
+}
+
+function normalizeError(response, data) {
+  const error = new Error(data?.message || "Something went wrong");
+  Object.assign(error, {
+    message: data?.message || "Something went wrong",
+    code: data?.errorCode || "UNKNOWN_ERROR",
+    validationErrors: data?.errors || null,
+    status: response.status,
+  });
+  return error;
+}
+
+async function handleRefreshFlow(endpoint, options) {
+  const { logout, updateToken } = useAuthStore.getState();
+
+  // If already refreshing, wait in line
+  if (isRefreshing) {
+    return new Promise((resolve, reject) => {
+      failedQueue.push({
+        resolve: () => resolve(apiClient(endpoint, options)),
+        reject,
+      });
+    });
+  }
+
+  isRefreshing = true;
+
   try {
-    const { accessToken } = useAuthStore.getState();
-
-    const headers = {
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
-      ...options.headers,
-    };
-
-    if (!(options.body instanceof FormData)) {
-      headers["Content-Type"] = "application/json";
-    }
-
-    const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-      ...options,
-      headers,
+    logger.info("Attempting to refresh session...");
+    const resp = await fetch(`${BASE_URL}/auth/refresh`, {
+      method: "POST",
+      credentials: "include",
     });
 
-    const result = await response.json();
+    const data = await resp.json();
 
-    // Handle 401 + INVALID_TOKEN for refresh
-    if (
-      response.status === 401 && 
-      result.errorCode === "INVALID_TOKEN" && 
-      !options._retry
-    ) {
-      if (isRefreshing) {
-        return new Promise((resolve) => {
-          addRefreshSubscriber((token) => {
-            options._retry = true;
-            options.headers = { ...options.headers, Authorization: `Bearer ${token}` };
-            resolve(request(endpoint, options));
-          });
-        });
-      }
+    if (resp.ok && data.accessToken) {
+      logger.info("Session refreshed successfully");
+      updateToken(data.accessToken);
 
-      isRefreshing = true;
+      isRefreshing = false;
+      processQueue(null, data.accessToken);
 
-      try {
-        const refreshResponse = await fetch(`${API_BASE_URL}/auth/refresh`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const refreshResult = await refreshResponse.json();
-
-        if (refreshResult.success && refreshResult.data?.accessToken) {
-          const newToken = refreshResult.data.accessToken;
-          const { setAuth, user } = useAuthStore.getState();
-          setAuth(user, newToken);
-          isRefreshing = false;
-          onTokenRefreshed(newToken);
-
-          options._retry = true;
-          return request(endpoint, options);
-        } else {
-          throw new Error("Refresh failed");
-        }
-      } catch (refreshError) {
-        isRefreshing = false;
-        useAuthStore.getState().logout();
-        throw refreshError;
-      }
+      return apiClient(endpoint, options);
+    } else {
+      throw new Error(data?.message || "Refresh failed");
     }
-
-    if (!response.ok || result.success === false) {
-      const error = new Error(result.message || "Something went wrong");
-      error.code = result.errorCode || "UNKNOWN_ERROR";
-      error.validationErrors = result.errors || null;
-      error.status = response.status;
-      throw error;
-    }
-
-    // Defensive check: if result.data is missing but result has accessToken, 
-    // it might be a flat response. Use result itself as data in that case.
-    const responseData = result.data || (result.accessToken ? result : null);
-
-    logger.info(`API Request: ${endpoint}`, { responseData });
-
-    return {
-      data: responseData,
-      meta: result.meta || null,
-      message: result.message,
-    };
   } catch (err) {
-    if (!(err instanceof Error)) {
-      const networkError = new Error("Network error. Please try again.");
-      networkError.code = "NETWORK_ERROR";
-      networkError.status = 500;
-      throw networkError;
+    logger.error("Session refresh failed", err);
+    isRefreshing = false;
+    processQueue(err);
+    logout();
+
+    if (window.location.pathname !== "/auth/login") {
+      window.location.href = "/auth/login";
     }
     throw err;
   }
+}
+
+// ----------------------------------- MAIN CLIENT -----------------------------------
+
+const apiClient = async (endpoint, options = {}) => {
+  const { accessToken } = useAuthStore.getState();
+  const url = `${BASE_URL}${endpoint}`;
+
+  // 1. Prepare Request Configuration
+  const config = prepareConfig(accessToken, options);
+
+  try {
+    // 2. Execute Request
+    const response = await fetch(url, config);
+    const data = await parseJSON(response);
+
+    // 3. Intercept: Token Expired (401)
+    if (isTokenExpired(response, data)) {
+      return handleRefreshFlow(endpoint, options);
+    }
+
+    // 4. Intercept: Application Errors
+    if (isErrorResponse(response, data)) {
+      throw normalizeError(response, data);
+    }
+
+    logger.info(`[Success] ${endpoint}`, data);
+    return data;
+  } catch (error) {
+    if (error.name === "TypeError") logger.error("Network Error", error);
+    throw error;
+  }
 };
 
-export default {
-  get: (endpoint) => request(endpoint, { method: "GET" }),
-  post: (endpoint, body) =>
-    request(endpoint, {
-      method: "POST",
-      body: body instanceof FormData ? body : JSON.stringify(body),
-    }),
-  put: (endpoint, body) =>
-    request(endpoint, {
-      method: "PUT",
-      body: body instanceof FormData ? body : JSON.stringify(body),
-    }),
-  patch: (endpoint, body) =>
-    request(endpoint, {
-      method: "PATCH",
-      body: body instanceof FormData ? body : JSON.stringify(body),
-    }),
-  delete: (endpoint) => request(endpoint, { method: "DELETE" }),
-};
+export default apiClient;

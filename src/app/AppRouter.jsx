@@ -6,7 +6,7 @@ import OrderRoutes from "../modules/orders/OrderRoutes";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import ForbiddenPage from "./pages/ForbiddenPage/ForbiddenPage";
 import ProtectedRoute from "../shared/components/ProtectedRoute";
-import { useAuthStore } from "../store/authStore";
+import { useAuthStore } from "@app/store/authStore";
 
 const AppRouter = () => {
   const isHydrated = useAuthStore((state) => state.isHydrated);

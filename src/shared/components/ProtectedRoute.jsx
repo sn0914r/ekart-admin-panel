@@ -1,12 +1,12 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useAuthStore } from "../../store/authStore";
+import { useAuthStore } from "@app/store/authStore";
 
 /**
  * ProtectedRoute component to guard routes based on authentication and roles.
- * @param {object} props 
- * @param {React.ReactNode} props.children 
- * @param {string} [props.requiredRole] 
+ * @param {object} props
+ * @param {React.ReactNode} props.children
+ * @param {string} [props.requiredRole]
  * @returns {React.ReactNode}
  */
 const ProtectedRoute = ({ children, requiredRole = "admin" }) => {
