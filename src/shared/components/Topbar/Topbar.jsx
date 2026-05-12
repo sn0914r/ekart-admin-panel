@@ -1,5 +1,6 @@
 import { Menu, Moon, Sun } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   TopbarContainer,
   TopbarLeft,
@@ -10,8 +11,19 @@ import {
   TopbarRight
 } from "./Topbar.styles";
 
-const Topbar = ({ toggleSidebar, title = "Dashboard", subtitle }) => {
+const Topbar = ({ toggleSidebar, subtitle }) => {
   const [isDark, setIsDark] = useState(false);
+  const location = useLocation();
+
+  const getPageTitle = () => {
+    const path = location.pathname;
+    if (path.startsWith("/analytics")) return "Analytics";
+    if (path.startsWith("/products")) return "Products";
+    if (path.startsWith("/orders")) return "Orders";
+    return "Dashboard";
+  };
+
+  const title = getPageTitle();
 
   useEffect(() => {
     // Check initial state from body class or localStorage

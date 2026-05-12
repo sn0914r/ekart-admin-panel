@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Sidebar from "@shared/layout/Sidebar";
-import Topbar from "@shared/layout/Topbar";
+import Sidebar from "@shared/components/Sidebar";
+import Topbar from "@shared/components/Topbar";
 import { LayoutShell, MainContent, PageContent } from "./MainLayout.styles";
 
 const Layout = ({ children }) => {

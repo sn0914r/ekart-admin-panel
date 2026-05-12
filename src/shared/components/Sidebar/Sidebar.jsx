@@ -16,9 +16,7 @@ import {
   SidebarContainer,
   SidebarLogoBlock,
   SidebarLogoIcon,
-  SidebarLogoText,
   SidebarLogoName,
-  SidebarLogoSub,
   NavList,
   NavSectionLabel,
   StyledNavLink,
@@ -34,13 +32,10 @@ const Sidebar = ({ isOpen }) => {
   return (
     <SidebarContainer isOpen={isOpen}>
       <SidebarLogoBlock>
-        <SidebarLogoIcon>
-          <ShoppingCart size={16} color="white" />
+        <SidebarLogoIcon style={{ fontSize: '20px', fontWeight: '800', color: 'white', fontFamily: 'monospace' }}>
+          e
         </SidebarLogoIcon>
-        <SidebarLogoText>
-          <SidebarLogoName>eKart Admin</SidebarLogoName>
-          <SidebarLogoSub>Dashboard Panel</SidebarLogoSub>
-        </SidebarLogoText>
+        <SidebarLogoName>eKart</SidebarLogoName>
       </SidebarLogoBlock>
 
       <NavList>
@@ -49,10 +44,6 @@ const Sidebar = ({ isOpen }) => {
           <BarChart2 />
           <span>Dashboard</span>
         </StyledNavLink>
-        <StyledNavLink to="/analytics">
-          <PieChart />
-          <span>Analytics</span>
-        </StyledNavLink>
         <StyledNavLink to="/orders">
           <ShoppingCart />
           <span>Orders</span>
@@ -60,6 +51,10 @@ const Sidebar = ({ isOpen }) => {
         <StyledNavLink to="/products">
           <Package />
           <span>Products</span>
+        </StyledNavLink>
+        <StyledNavLink to="/analytics">
+          <PieChart />
+          <span>Analytics</span>
         </StyledNavLink>
         {/* 
         <NavSectionLabel style={{ marginTop: "16px" }}>SYSTEM</NavSectionLabel>

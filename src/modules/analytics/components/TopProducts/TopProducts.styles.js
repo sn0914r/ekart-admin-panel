@@ -40,7 +40,7 @@ export const Table = styled.table`
   }
 
   td {
-    padding: 12px 0;
+    padding: 16px 0;
     border-bottom: 0.5px solid var(--border);
     color: var(--text);
     vertical-align: middle;

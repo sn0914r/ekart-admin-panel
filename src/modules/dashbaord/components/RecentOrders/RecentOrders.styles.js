@@ -41,7 +41,7 @@ export const Table = styled.table`
   }
 
   td {
-    padding: 9px 0;
+    padding: 16px 0;
     border-bottom: 0.5px solid var(--border);
     color: var(--text);
     vertical-align: middle;
@@ -69,17 +69,27 @@ export const Badge = styled.span`
   letter-spacing: 0.02em;
   text-transform: capitalize;
 
-  &.delivered, &.active, &.ok, &.paid, &.confirmed {
+  &.delivered,
+  &.active,
+  &.ok,
+  &.paid,
+  &.confirmed {
     background: var(--badge-green-bg);
     color: var(--badge-green-text);
   }
 
-  &.pending, &.processing, &.low, &.created {
+  &.pending,
+  &.processing,
+  &.low,
+  &.created {
     background: var(--badge-amber-bg);
     color: var(--badge-amber-text);
   }
 
-  &.cancelled, &.critical, &.inactive, &.failed {
+  &.cancelled,
+  &.critical,
+  &.inactive,
+  &.failed {
     background: var(--badge-red-bg);
     color: var(--badge-red-text);
   }

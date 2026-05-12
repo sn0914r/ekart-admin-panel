@@ -13,16 +13,15 @@ export const SidebarContainer = styled.aside`
 `;
 
 export const SidebarLogoBlock = styled.div`
-  padding: 20px;
+  padding: 24px 20px 10px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  border-bottom: 0.5px solid var(--border);
+  gap: 12px;
 `;
 
 export const SidebarLogoIcon = styled.div`
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   background: var(--accent);
   border-radius: 8px;
   display: flex;
@@ -31,20 +30,11 @@ export const SidebarLogoIcon = styled.div`
   flex-shrink: 0;
 `;
 
-export const SidebarLogoText = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 export const SidebarLogoName = styled.span`
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   color: var(--text);
-`;
-
-export const SidebarLogoSub = styled.span`
-  font-size: 11px;
-  color: var(--muted);
+  letter-spacing: -0.02em;
 `;
 
 export const NavList = styled.nav`
