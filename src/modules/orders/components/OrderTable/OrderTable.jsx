@@ -1,8 +1,9 @@
 import { PackageOpen } from "lucide-react";
 import * as S from "./OrderTable.styles";
 import OrderRow from "./sub-components/OrderRow";
+import SortHeader from "./sub-components/SortHeader";
 
-const OrderTable = ({ orders, onView }) => {
+const OrderTable = ({ orders, onView, sorts = [], onSort, hasPagination }) => {
   if (!orders || orders.length === 0) {
     return (
       <S.TableWrapper>
@@ -15,24 +16,24 @@ const OrderTable = ({ orders, onView }) => {
   }
 
   return (
-    <S.TableWrapper>
+    <S.TableWrapper $hasPagination={hasPagination}>
       <S.DataTable>
         <thead>
           <tr>
-            <S.Th>Order ID</S.Th>
-            <S.Th>User Email</S.Th>
-            <S.Th>Amount</S.Th>
-            <S.Th>Payment</S.Th>
-            <S.Th>Shipping</S.Th>
-            <S.Th>Status</S.Th>
-            <S.Th>Date</S.Th>
-            <S.Th style={{ textAlign: "right" }}>Action</S.Th>
+            <SortHeader field="orderId" sorts={sorts} onSort={onSort} label="Order ID" width="12%" />
+            <SortHeader field="email" sorts={sorts} onSort={onSort} label="User Email" width="22%" />
+            <SortHeader field="subTotal" sorts={sorts} onSort={onSort} label="Amount" width="10%" />
+            <SortHeader field="paymentStatus" sorts={sorts} onSort={onSort} label="Payment" width="12%" />
+            <SortHeader field="orderStatus" sorts={sorts} onSort={onSort} label="Order Status" width="14%" />
+            <SortHeader field="shippingStatus" sorts={sorts} onSort={onSort} label="Shipping" width="12%" />
+            <SortHeader field="createdAt" sorts={sorts} onSort={onSort} label="Date" width="12%" />
+            <S.Th style={{ textAlign: "right", width: "6%" }}>Action</S.Th>
           </tr>
         </thead>
         <tbody>
           {orders.map((order) => (
             <OrderRow 
-              key={order._id} 
+              key={order.orderId || order._id} 
               order={order} 
               onView={onView} 
             />

@@ -1,6 +1,7 @@
 import OrderTable from "../components/OrderTable";
 import OrderDetailModal from "../components/OrderDetailsModal";
 import OrdersHeader from "../components/OrderHeader/OrdersHeader";
+import Pagination from "@shared/components/Pagination/Pagination";
 import { useOrderPageFlow } from "../hooks/ui/useOrderPageFlow";
 import Loader from "@shared/components/Loader/Loader";
 import * as S from "./OrdersPage.styles";
@@ -8,28 +9,64 @@ import * as S from "./OrdersPage.styles";
 const OrdersPage = () => {
   const {
     orders,
+    pagination,
     isLoading,
     isError,
     error,
     activeOrderId,
     openOrderDetailsModel,
     closeOrderDetailsModel,
+    searchTerm,
+    setSearchTerm,
+    filters,
+    handleFilterChange,
+    sorts,
+    handleSort,
+    page,
+    setPage,
+    limit,
+    setLimit,
   } = useOrderPageFlow();
-
-  if (isLoading) return <Loader />;
-  if (isError)
-    return (
-      <div style={{ color: "var(--badge-red-text)", padding: "24px" }}>
-        Failed to load orders: {error.message}
-      </div>
-    );
 
   return (
     <S.PageLayout>
       <S.MainContentWrapper>
-        <OrdersHeader />
+        <OrdersHeader 
+          searchTerm={searchTerm} 
+          setSearchTerm={setSearchTerm}
+          filters={filters}
+          onFilterChange={handleFilterChange}
+        />
 
-        <OrderTable orders={orders} onView={openOrderDetailsModel} />
+        {isLoading ? (
+          <div style={{ display: "flex", justifyContent: "center", padding: "60px 0" }}>
+            <Loader />
+          </div>
+        ) : isError ? (
+          <div style={{ color: "var(--badge-red-text)", padding: "24px" }}>
+            Failed to load orders: {error?.message}
+          </div>
+        ) : (
+          <>
+            <OrderTable 
+              orders={orders} 
+              onView={openOrderDetailsModel}
+              sorts={sorts}
+              onSort={handleSort}
+              hasPagination={!!pagination}
+            />
+            {pagination && (
+              <Pagination 
+                currentPage={page} 
+                totalPages={pagination.totalPages} 
+                onPageChange={setPage} 
+                limit={limit}
+                onLimitChange={setLimit}
+                limitOptions={[10, 20, 30, 50]}
+              />
+            )}
+          </>
+        )}
       </S.MainContentWrapper>
 
       {activeOrderId && (

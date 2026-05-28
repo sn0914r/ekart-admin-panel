@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { getOrders } from "../../api";
 
-export const useOrdersQuery = () => {
+export const useOrdersQuery = (filters = {}) => {
   return useQuery({
-    queryKey: ["admin_orders"],
-    queryFn: getOrders,
+    queryKey: ["admin_orders", filters],
+    queryFn: () => getOrders(filters),
+    placeholderData: keepPreviousData,
   });
 };

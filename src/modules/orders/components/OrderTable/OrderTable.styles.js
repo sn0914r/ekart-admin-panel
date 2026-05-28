@@ -17,6 +17,14 @@ export const TableWrapper = styled.div`
   border: 0.5px solid var(--border);
   border-radius: 10px;
 
+  ${(props) =>
+    props.$hasPagination &&
+    `
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  `}
+
   &::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -32,6 +40,7 @@ export const DataTable = styled.table`
   width: 100%;
   border-collapse: collapse;
   font-size: 12px;
+  table-layout: fixed;
 `;
 
 export const Th = styled.th`
@@ -47,6 +56,37 @@ export const Th = styled.th`
   top: 0;
   background: var(--surface);
   z-index: 10;
+  user-select: none;
+
+  &.sortable {
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+
+  .th-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .sort-icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  &:hover .sort-icon-wrapper:not(.active) {
+    opacity: 0.3;
+  }
 
   &:first-of-type {
     padding-left: 24px;
