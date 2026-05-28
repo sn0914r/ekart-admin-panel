@@ -6,7 +6,8 @@
       "@modules/*": ["modules/*"],
       "@lib/*": ["lib/*"],
       "@utils/*": ["utils/*"],
-      "@app/*": ["app/*"]
+      "@app/*": ["app/*"],
+      "@assets/*": ["assets/*"]
     }
   }
 }

@@ -1,6 +1,6 @@
 import { Menu, Moon, Sun } from "lucide-react";
-import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useThemeStore } from "@app/store/useThemeStore";
 import {
   TopbarContainer,
   TopbarLeft,
@@ -12,7 +12,7 @@ import {
 } from "./Topbar.styles";
 
 const Topbar = ({ toggleSidebar, subtitle }) => {
-  const [isDark, setIsDark] = useState(false);
+  const { isDark, toggleTheme } = useThemeStore();
   const location = useLocation();
 
   const getPageTitle = () => {
@@ -24,27 +24,6 @@ const Topbar = ({ toggleSidebar, subtitle }) => {
   };
 
   const title = getPageTitle();
-
-  useEffect(() => {
-    // Check initial state from body class or localStorage
-    const savedMode = localStorage.getItem("theme");
-    if (savedMode === "dark") {
-      setIsDark(true);
-      document.body.classList.add("dark");
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const nextDark = !isDark;
-    setIsDark(nextDark);
-    if (nextDark) {
-      document.body.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.body.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-  };
 
   return (
     <TopbarContainer>
