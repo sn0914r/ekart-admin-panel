@@ -11,16 +11,24 @@ export const TableWrapper = styled.div`
   background: var(--surface);
   border: 0.5px solid var(--border);
   border-radius: 10px;
-  /* Removed padding so table renders edge-to-edge natively */
 
+  ${(props) =>
+    props.$hasPagination &&
+    `
+    border-bottom: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  `}
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
   &::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+    display: none;
+    width: 0px;
+    height: 0px;
   }
-  &::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 4px;
-  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 `;
 
 // =====================
@@ -45,6 +53,37 @@ export const Th = styled.th`
   top: 0;
   background: var(--surface);
   z-index: 10;
+  user-select: none;
+
+  &.sortable {
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--text);
+    }
+  }
+
+  .th-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .sort-icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    
+    &.active {
+      opacity: 1;
+    }
+  }
+
+  &:hover .sort-icon-wrapper:not(.active) {
+    opacity: 0.3;
+  }
 
   &:first-of-type {
     padding-left: 24px;

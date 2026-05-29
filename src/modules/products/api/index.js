@@ -1,7 +1,22 @@
 import api from "@lib/apiClient";
 
-export const getProducts = async () => {
-  return await api("/admin/products", {
+export const getProducts = async (queryParams = {}) => {
+  const { page = 1, limit = 10, search = "", status = "", stockStatus = "", sort = "" } = queryParams;
+  const urlParams = new URLSearchParams({ page, limit });
+  if (search) {
+    urlParams.append("search", search);
+  }
+  if (status) {
+    urlParams.append("status", status);
+  }
+  if (stockStatus) {
+    urlParams.append("stockStatus", stockStatus);
+  }
+  if (sort) {
+    urlParams.append("sort", sort);
+  }
+  const queryString = urlParams.toString();
+  return await api(`/admin/products?${queryString}`, {
     method: "GET",
   });
 };

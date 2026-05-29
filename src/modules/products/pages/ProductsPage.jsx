@@ -3,12 +3,14 @@ import ProductFormModal from "../components/ProductFormModal";
 import ProductTable from "../components/ProductTable";
 import ConfirmModal from "../../../shared/components/ConfirmModal/ConfirmModal";
 import Loader from "../../../shared/components/Loader/Loader";
+import Pagination from "../../../shared/components/Pagination/Pagination";
 import { useProductsPageFlow } from "../hooks/ui/useProductsPageFlow";
 import * as S from "./ProductsPage.styles";
 
 const ProductsPage = () => {
   const {
     products,
+    pagination,
     isLoading,
     isError,
     error,
@@ -23,6 +25,16 @@ const ProductsPage = () => {
     handleDeleteClick,
     handleConfirmDelete,
     isDeleting,
+    page,
+    setPage,
+    limit,
+    setLimit,
+    searchTerm,
+    setSearchTerm,
+    filters,
+    handleFilterChange,
+    sorts,
+    handleSort,
   } = useProductsPageFlow();
 
   if (isLoading) return <Loader />;
@@ -46,6 +58,32 @@ const ProductsPage = () => {
           </S.TitleSection>
 
           <S.ControlsSection>
+            <S.SearchInput
+              type="text"
+              placeholder="Search products..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+
+            <S.FilterSelect
+              value={filters.status}
+              onChange={(e) => handleFilterChange("status", e.target.value)}
+            >
+              <option value="">All Statuses</option>
+              <option value="ACTIVE">Active</option>
+              <option value="NOT_ACTIVE">Not Active</option>
+            </S.FilterSelect>
+
+            <S.FilterSelect
+              value={filters.stockStatus}
+              onChange={(e) => handleFilterChange("stockStatus", e.target.value)}
+            >
+              <option value="">All Stock</option>
+              <option value="IN_STOCK">In Stock</option>
+              <option value="LOW_STOCK">Low Stock</option>
+              <option value="OUT_OF_STOCK">Out of Stock</option>
+            </S.FilterSelect>
+
             <S.AddButton onClick={handleAdd}>
               <Plus size={16} /> Add Product
             </S.AddButton>
@@ -57,7 +95,20 @@ const ProductsPage = () => {
           onEdit={handleEdit}
           onDelete={handleDeleteClick}
           onToggleStatus={handleToggleStatus}
+          hasPagination={!!pagination}
+          sorts={sorts}
+          onSort={handleSort}
         />
+        {pagination && (
+          <Pagination
+            currentPage={page}
+            totalPages={pagination.totalPages}
+            onPageChange={setPage}
+            limit={limit}
+            onLimitChange={setLimit}
+            limitOptions={[10, 20, 30, 50]}
+          />
+        )}
       </S.MainContentWrapper>
 
       <ProductFormModal

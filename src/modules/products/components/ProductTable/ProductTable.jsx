@@ -1,11 +1,15 @@
 import { Edit2, Trash2, PackageOpen } from "lucide-react";
 import * as S from "./ProductTable.styles";
+import SortHeader from "./sub-components/SortHeader";
 
 const ProductTable = ({
   products,
   onEdit,
   onDelete,
   onToggleStatus,
+  hasPagination,
+  sorts = [],
+  onSort,
 }) => {
   if (!products || products.length === 0) {
     return (
@@ -21,15 +25,15 @@ const ProductTable = ({
   }
 
   return (
-    <S.TableWrapper>
+    <S.TableWrapper $hasPagination={hasPagination}>
       <S.DataTable>
         <thead>
           <tr>
             <S.Th width="40px">S.No</S.Th>
-            <S.Th>Product Name</S.Th>
-            <S.Th>Category</S.Th>
-            <S.Th>Price</S.Th>
-            <S.Th>Stock</S.Th>
+            <SortHeader field="name" sorts={sorts} onSort={onSort} label="Product Name" />
+            <SortHeader field="category" sorts={sorts} onSort={onSort} label="Category" />
+            <SortHeader field="price" sorts={sorts} onSort={onSort} label="Price" />
+            <SortHeader field="stock" sorts={sorts} onSort={onSort} label="Stock" />
             <S.Th>Status</S.Th>
             <S.Th align="right">Action</S.Th>
           </tr>
