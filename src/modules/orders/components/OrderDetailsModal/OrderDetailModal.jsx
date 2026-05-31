@@ -25,7 +25,7 @@ const OrderDetailModal = ({ isOpen, onClose, orderId }) => {
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="Order Details Dashboard"
+      title={order?.orderId ? `Order ${order.orderId}` : "Order Details"}
       maxWidth="900px"
     >
       {isLoading ? (
@@ -61,10 +61,7 @@ const OrderDetailModal = ({ isOpen, onClose, orderId }) => {
 
           <ShippingAddress address={order.shippingAddress} />
 
-          <StatusTimeline
-            shippingHistory={order.shippingStatusHistory}
-            orderHistory={order.orderStatusHistory}
-          />
+          <StatusTimeline timeline={order.timeline} />
         </S.ModalContainer>
       )}
     </Modal>

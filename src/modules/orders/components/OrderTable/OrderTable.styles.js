@@ -35,9 +35,37 @@ export const TableWrapper = styled.div`
   }
 `;
 
+export const EmptyStateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  gap: 12px;
+`;
+
+export const EmptyStateTextGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+`;
+
+export const EmptyStateTitle = styled.span`
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+`;
+
+export const EmptyStateSubtitle = styled.span`
+  font-size: 12px;
+  color: var(--muted);
+`;
+
 export const DataTable = styled.table`
   label: DataTable;
   width: 100%;
+  min-width: 900px; /* Forces horizontal scroll on small screens */
   border-collapse: collapse;
   font-size: 12px;
   table-layout: fixed;

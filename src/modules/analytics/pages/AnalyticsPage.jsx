@@ -4,6 +4,8 @@ import RevenueChart from "../components/RevenueChart/RevenueChart";
 import OrderStatusChart from "../components/OrderStatusChart/OrderStatusChart";
 import TopProducts from "../components/TopProducts/TopProducts";
 import * as S from "./AnalyticsPage.styles";
+import Loader from "@shared/components/Loader";
+import ErrorState from "@shared/components/ErrorState";
 
 const AnalyticsPage = () => {
   const {
@@ -16,8 +18,8 @@ const AnalyticsPage = () => {
     error,
   } = useAnalytics();
 
-  if (isLoading) return <div className="p-4">Loading analytics...</div>;
-  if (isError) return <div className="p-4 text-danger">Error loading analytics: {error?.message}</div>;
+  if (isLoading) return <Loader />;
+  if (isError) return <ErrorState message={error.message} />;
 
   return (
     <S.PageLayout>

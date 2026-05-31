@@ -23,16 +23,18 @@ const AppRouter = () => {
         element={
           <ProtectedRoute requiredRole="admin">
             <MainLayout>
-              <DashboardRoutes />
-              <AnalyticsRoute />
-              <ProductsRoutes />
-              <OrderRoutes />
+              <Routes>
+                <Route path="/" element={<DashboardRoutes />} />
+                <Route path="/products/*" element={<ProductsRoutes />} />
+                <Route path="/orders/*" element={<OrderRoutes />} />
+                <Route path="/analytics/*" element={<AnalyticsRoute />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
             </MainLayout>
           </ProtectedRoute>
         }
       />
       <Route path="/forbidden" element={<ForbiddenPage />} />
-      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 };

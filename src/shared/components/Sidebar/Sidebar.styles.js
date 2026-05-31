@@ -13,10 +13,12 @@ export const SidebarContainer = styled.aside`
 `;
 
 export const SidebarLogoBlock = styled.div`
-  padding: 24px 20px 10px;
+  padding: 10px;
   display: flex;
   align-items: center;
   gap: 12px;
+  aspect-ratio: 16/9;
+  overflow: hidden;
 `;
 
 export const SidebarLogoIcon = styled.div`

@@ -35,16 +35,22 @@ const ShippingManagement = ({
           </S.Badge>
 
           <S.TransitionGroup>
-            {allowedTransitions.map((targetStatus) => (
-              <S.TransitionButton
-                key={targetStatus}
-                onClick={() => handleTransition(targetStatus)}
-                disabled={isPending}
-                className={targetStatus.toLowerCase()}
-              >
-                Mark as {targetStatus}
-              </S.TransitionButton>
-            ))}
+            {allowedTransitions.map((targetStatus) => {
+              const buttonText = targetStatus === 'CANCELLED' 
+                ? 'Cancel Order' 
+                : `Mark ${targetStatus.charAt(0) + targetStatus.slice(1).toLowerCase()}`;
+
+              return (
+                <S.TransitionButton
+                  key={targetStatus}
+                  onClick={() => handleTransition(targetStatus)}
+                  disabled={isPending}
+                  className={targetStatus.toLowerCase()}
+                >
+                  {buttonText}
+                </S.TransitionButton>
+              );
+            })}
           </S.TransitionGroup>
         </div>
       </div>

@@ -7,10 +7,13 @@ const OrderTable = ({ orders, onView, sorts = [], onSort, hasPagination }) => {
   if (!orders || orders.length === 0) {
     return (
       <S.TableWrapper>
-        <div style={{ textAlign: 'center', padding: '60px 0', color: 'var(--muted)' }}>
-          <PackageOpen size={48} style={{ opacity: 0.3, marginBottom: '16px' }} />
-          <p>No orders found.</p>
-        </div>
+        <S.EmptyStateContainer>
+          <PackageOpen size={48} strokeWidth={1.5} color="var(--muted)" style={{ opacity: 0.6 }} />
+          <S.EmptyStateTextGroup>
+            <S.EmptyStateTitle>No orders found.</S.EmptyStateTitle>
+            <S.EmptyStateSubtitle>Try adjusting your filters or search query.</S.EmptyStateSubtitle>
+          </S.EmptyStateTextGroup>
+        </S.EmptyStateContainer>
       </S.TableWrapper>
     );
   }

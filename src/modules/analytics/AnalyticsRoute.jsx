@@ -4,7 +4,7 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 const AnalyticsRoute = () => {
   return (
     <Routes>
-      <Route path="/analytics" element={<AnalyticsPage />} />
+      <Route path="/" element={<AnalyticsPage />} />
     </Routes>
   );
 };

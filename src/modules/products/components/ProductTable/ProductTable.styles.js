@@ -158,15 +158,24 @@ export const ProductSubtext = styled.div`
   margin-top: 2px;
 `;
 
-export const CategoryText = styled.span`
+export const CategoryBadge = styled.span`
   text-transform: capitalize;
-  font-size: 13px;
-  color: ${(props) => (props.isUnknown ? "var(--muted)" : "inherit")};
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: inline-flex;
+  background: ${(props) => props.$bg || "var(--surface2)"};
+  color: ${(props) => props.$text || "var(--muted)"};
 `;
 
 export const StockText = styled.span`
-  color: ${(props) => (props.isCritical ? "var(--badge-red-text)" : "inherit")};
-  font-weight: ${(props) => (props.isCritical ? 600 : 400)};
+  color: ${(props) => {
+    if (props.$status === 'critical') return 'var(--badge-red-text)';
+    if (props.$status === 'low') return 'var(--badge-amber-text)';
+    return 'inherit';
+  }};
+  font-weight: ${(props) => (props.$status !== 'normal' ? 600 : 400)};
 `;
 
 // =====================

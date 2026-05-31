@@ -67,6 +67,24 @@ export const LoginHeader = styled.div`
   margin-bottom: 48px;
 `;
 
+export const AdminBadge = styled.div`
+  display: inline-block;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+`;
+
+export const BadgeText = styled.span`
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+`;
+
 export const LoginTitle = styled.h1`
   font-size: 28px;
   font-weight: 700;

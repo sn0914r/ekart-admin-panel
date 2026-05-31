@@ -1,5 +1,5 @@
 import { useLoginForm } from "../../hooks/ui/useLoginForm";
-import { Monitor } from "lucide-react";
+import { Lock } from "lucide-react";
 import * as S from "./LoginForm.styles";
 
 const LoginForm = () => {
@@ -17,12 +17,19 @@ const LoginForm = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                marginBottom: 24,
               }}
             >
-              <Monitor size={24} color="white" />
+              <Lock size={24} color="white" />
             </div>
+
+            <S.AdminBadge>
+              {/* <S.BadgeText>EKART</S.BadgeText> */}
+              <S.BadgeText>EKART | ADMIN PANEL</S.BadgeText>
+            </S.AdminBadge>
+
             <S.LoginTitle>Welcome back</S.LoginTitle>
-            <S.LoginSubtitle>Sign in to access the eKart admin panel</S.LoginSubtitle>
+            <S.LoginSubtitle>Sign in to access your account</S.LoginSubtitle>
           </S.LoginHeader>
 
           <S.Form onSubmit={onSubmit}>

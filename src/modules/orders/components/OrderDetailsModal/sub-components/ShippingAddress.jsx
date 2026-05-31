@@ -7,14 +7,17 @@ const ShippingAddress = ({ address }) => {
   return (
     <S.BottomRow>
       <S.SectionTitle>Shipping Destination</S.SectionTitle>
-      <div style={{ fontSize: "13px", color: "var(--text)", lineHeight: 1.5 }}>
-        <span style={{ fontWeight: 600, color: "var(--text)" }}>{address.name}</span> • {address.phone}<br/>
-        <span style={{ color: "var(--muted)" }}>
-          {address.address}<br />
-          {address.city}, {address.state} {address.pincode}<br />
-          {address.country}
-        </span>
-      </div>
+      <S.AddressContainer>
+        <S.AddressName>{address.name}</S.AddressName>
+        <S.AddressPhone>{address.phone}</S.AddressPhone>
+        
+        <S.AddressDetails>
+          <span>{address.address}</span>
+          <span>{address.city}</span>
+          <span>{address.state} {address.pincode}</span>
+          <span>{address.country}</span>
+        </S.AddressDetails>
+      </S.AddressContainer>
     </S.BottomRow>
   );
 };

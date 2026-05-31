@@ -4,6 +4,8 @@ import RecentOrders from "../components/RecentOrders/RecentOrders";
 import LowStockAlerts from "../components/LowStockAlerts/LowStockAlerts";
 import RecentActivity from "../components/RecentActivity/RecentActivity";
 import * as S from "./DashboardPage.styles";
+import Loader from "@shared/components/Loader";
+import ErrorState from "@shared/components/ErrorState";
 
 const DashboardPage = () => {
   const {
@@ -16,8 +18,16 @@ const DashboardPage = () => {
     error,
   } = useDashboard();
 
-  if (isLoading) return <div className="p-4">Loading dashboard...</div>;
-  if (isError) return <div className="p-4 text-danger">Error loading dashboard: {error?.message}</div>;
+  if (isLoading) return <Loader />;
+  if (isError)
+    return (
+      <div className="container-fluid pt-4">
+        <ErrorState 
+          title="Failed to load dashboard" 
+          message={error?.message} 
+        />
+      </div>
+    );
 
   return (
     <S.PageLayout>

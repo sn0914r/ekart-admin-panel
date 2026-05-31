@@ -57,6 +57,33 @@ export const BottomRow = styled.div`
   padding: 16px;
 `;
 
+export const AddressContainer = styled.div`
+  label: AddressContainer;
+  font-size: 13px;
+  line-height: 1.6;
+`;
+
+export const AddressName = styled.div`
+  label: AddressName;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+`;
+
+export const AddressPhone = styled.div`
+  label: AddressPhone;
+  color: var(--text);
+  margin-bottom: 12px;
+`;
+
+export const AddressDetails = styled.div`
+  label: AddressDetails;
+  color: var(--muted);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
 export const InfoGroup = styled.div`
   label: InfoGroup;
   display: flex;
@@ -80,6 +107,31 @@ export const Value = styled.div`
   font-size: 13px;
   color: var(--text);
   word-break: break-all;
+`;
+
+export const OrderIdWrapper = styled.div`
+  label: OrderIdWrapper;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`;
+
+export const CopyButton = styled.button`
+  label: CopyButton;
+  background: transparent;
+  border: none;
+  padding: 2px;
+  cursor: pointer;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  border-radius: 4px;
+
+  &:hover {
+    color: var(--text);
+  }
 `;
 
 /**
@@ -289,7 +341,11 @@ export const TimelineItem = styled.div`
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--accent);
+    background: ${(props) => {
+      if (props.$status === "CANCELLED") return "var(--badge-red-text)";
+      if (props.$isCurrent) return "var(--accent)";
+      return "var(--badge-green-text)";
+    }};
     box-shadow: 0 0 0 4px var(--surface2);
     margin-top: 4px;
     flex-shrink: 0;
@@ -301,8 +357,8 @@ export const TimelineItem = styled.div`
 
     .status {
       font-size: 12px;
-      font-weight: 500;
-      color: var(--text);
+      font-weight: ${(props) => (props.$isCurrent ? "600" : "500")};
+      color: ${(props) => (props.$isCurrent ? "var(--text)" : "var(--muted)")};
     }
 
     .time {

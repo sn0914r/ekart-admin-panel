@@ -1,13 +1,13 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@app/store/authStore";
+import { useThemeStore } from "@app/store/useThemeStore";
 import { useLogoutMutation } from "@modules/auth/hooks/api/useLogoutMutation";
+import logoWhiteImg from "../../../assets/logo-white.png";
+import logoDarkImg from "../../../assets/logo-dark.png";
 import {
   BarChart2,
   ShoppingCart,
-  Users,
   Package,
-  Settings,
-  Monitor,
   LogOut,
   LogIn,
   PieChart,
@@ -15,8 +15,6 @@ import {
 import {
   SidebarContainer,
   SidebarLogoBlock,
-  SidebarLogoIcon,
-  SidebarLogoName,
   NavList,
   NavSectionLabel,
   StyledNavLink,
@@ -27,15 +25,22 @@ import {
 
 const Sidebar = ({ isOpen }) => {
   const user = useAuthStore((state) => state.user);
+  const isDark = useThemeStore((state) => state.isDark);
   const navigate = useNavigate();
   const { mutate: mutateLogout } = useLogoutMutation();
   return (
     <SidebarContainer isOpen={isOpen}>
       <SidebarLogoBlock>
-        <SidebarLogoIcon style={{ fontSize: '20px', fontWeight: '800', color: 'white', fontFamily: 'monospace' }}>
-          e
-        </SidebarLogoIcon>
-        <SidebarLogoName>eKart</SidebarLogoName>
+        <img
+          src={isDark ? logoWhiteImg : logoDarkImg}
+          alt="eKart Logo"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            transform: "scale(1.8)", // Zoom in to crop out the empty transparent space
+          }}
+        />
       </SidebarLogoBlock>
 
       <NavList>

@@ -1,14 +1,35 @@
 import React from "react";
+import { Copy } from "lucide-react";
+import { toast } from "sonner";
 import * as S from "../OrderDetailModal.styles";
 
 const OrderSummary = ({ order }) => {
+  const handleCopy = () => {
+    if (order.orderId) {
+      navigator.clipboard.writeText(order.orderId);
+      toast.success("Order ID copied to clipboard");
+    }
+  };
+
   return (
     <>
       <S.SectionTitle>Order Summary</S.SectionTitle>
       <S.InfoGroup>
         <div>
           <S.Label>Order ID</S.Label>
-          <S.Value>{order._id}</S.Value>
+          <S.Value>
+            <S.OrderIdWrapper>
+              {order.orderId || "N/A"}
+              {order.orderId && (
+                <S.CopyButton 
+                  onClick={handleCopy}
+                  title="Copy full Order ID"
+                >
+                  <Copy size={14} />
+                </S.CopyButton>
+              )}
+            </S.OrderIdWrapper>
+          </S.Value>
         </div>
         <div>
           <S.Label>Customer Email</S.Label>

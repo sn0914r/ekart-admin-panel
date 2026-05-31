@@ -13,13 +13,13 @@ const ImageUploader = ({
 }) => {
   return (
     <S.FormGroup>
-      <S.Label>Product Media Sequence (Drag & Drop Sequence Hub)</S.Label>
+      <S.Label>Product Images</S.Label>
       <label>
         <S.FileLabel>
           <S.UploadIconWrapper>
             <Upload size={24} />
           </S.UploadIconWrapper>
-          <span>Click here to stack files against this product payload</span>
+          <span>Drag & drop images here or click to upload</span>
         </S.FileLabel>
         <S.HiddenInput
           type="file"
@@ -29,7 +29,7 @@ const ImageUploader = ({
         />
       </label>
       <S.HelperText>
-        We'll take the first image as your absolute primary UI Thumbnail.
+        The first image will be used as the product thumbnail.
       </S.HelperText>
 
       {files.length > 0 && (

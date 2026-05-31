@@ -3,6 +3,7 @@ import ProductFormModal from "../components/ProductFormModal";
 import ProductTable from "../components/ProductTable";
 import ConfirmModal from "../../../shared/components/ConfirmModal/ConfirmModal";
 import Loader from "../../../shared/components/Loader/Loader";
+import ErrorState from "../../../shared/components/ErrorState";
 import Pagination from "../../../shared/components/Pagination/Pagination";
 import { useProductsPageFlow } from "../hooks/ui/useProductsPageFlow";
 import * as S from "./ProductsPage.styles";
@@ -37,15 +38,6 @@ const ProductsPage = () => {
     handleSort,
   } = useProductsPageFlow();
 
-  if (isLoading) return <Loader />;
-  
-  if (isError)
-    return (
-      <S.ErrorWrapper>
-        Failed to load products: {error.message}
-      </S.ErrorWrapper>
-    );
-
   return (
     <S.PageLayout>
       <S.MainContentWrapper>
@@ -53,7 +45,8 @@ const ProductsPage = () => {
           <S.TitleSection>
             <S.PageTitle>Products</S.PageTitle>
             <S.PageSubtitle>
-              Manage your product catalog and inventory
+              Showing {products?.length || 0} of{" "}
+              {pagination?.totalProducts || 0} products
             </S.PageSubtitle>
           </S.TitleSection>
 
@@ -76,7 +69,9 @@ const ProductsPage = () => {
 
             <S.FilterSelect
               value={filters.stockStatus}
-              onChange={(e) => handleFilterChange("stockStatus", e.target.value)}
+              onChange={(e) =>
+                handleFilterChange("stockStatus", e.target.value)
+              }
             >
               <option value="">All Stock</option>
               <option value="IN_STOCK">In Stock</option>
@@ -90,24 +85,43 @@ const ProductsPage = () => {
           </S.ControlsSection>
         </S.TopArea>
 
-        <ProductTable
-          products={products}
-          onEdit={handleEdit}
-          onDelete={handleDeleteClick}
-          onToggleStatus={handleToggleStatus}
-          hasPagination={!!pagination}
-          sorts={sorts}
-          onSort={handleSort}
-        />
-        {pagination && (
-          <Pagination
-            currentPage={page}
-            totalPages={pagination.totalPages}
-            onPageChange={setPage}
-            limit={limit}
-            onLimitChange={setLimit}
-            limitOptions={[10, 20, 30, 50]}
+        {isLoading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              padding: "60px 0",
+            }}
+          >
+            <Loader />
+          </div>
+        ) : isError ? (
+          <ErrorState
+            title="Failed to load products"
+            message={error?.message}
           />
+        ) : (
+          <>
+            <ProductTable
+              products={products}
+              onEdit={handleEdit}
+              onDelete={handleDeleteClick}
+              onToggleStatus={handleToggleStatus}
+              hasPagination={!!pagination}
+              sorts={sorts}
+              onSort={handleSort}
+            />
+            {pagination && (
+              <Pagination
+                currentPage={page}
+                totalPages={pagination.totalPages}
+                onPageChange={setPage}
+                limit={limit}
+                onLimitChange={setLimit}
+                limitOptions={[10, 20, 30, 50]}
+              />
+            )}
+          </>
         )}
       </S.MainContentWrapper>
 

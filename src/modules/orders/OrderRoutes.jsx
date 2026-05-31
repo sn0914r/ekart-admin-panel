@@ -4,7 +4,7 @@ import OrdersPage from "./pages/OrdersPage";
 const OrderRoutes = () => {
   return (
     <Routes>
-      <Route path="/orders" element={<OrdersPage />} />
+      <Route path="/" element={<OrdersPage />} />
     </Routes>
   );
 };

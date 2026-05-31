@@ -4,6 +4,7 @@ import OrdersHeader from "../components/OrderHeader/OrdersHeader";
 import Pagination from "@shared/components/Pagination/Pagination";
 import { useOrderPageFlow } from "../hooks/ui/useOrderPageFlow";
 import Loader from "@shared/components/Loader/Loader";
+import ErrorState from "@shared/components/ErrorState";
 import * as S from "./OrdersPage.styles";
 
 const OrdersPage = () => {
@@ -43,9 +44,10 @@ const OrdersPage = () => {
             <Loader />
           </div>
         ) : isError ? (
-          <div style={{ color: "var(--badge-red-text)", padding: "24px" }}>
-            Failed to load orders: {error?.message}
-          </div>
+          <ErrorState 
+            title="Failed to load orders" 
+            message={error?.message} 
+          />
         ) : (
           <>
             <OrderTable 

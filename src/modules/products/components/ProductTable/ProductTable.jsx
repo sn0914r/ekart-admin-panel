@@ -29,7 +29,6 @@ const ProductTable = ({
       <S.DataTable>
         <thead>
           <tr>
-            <S.Th width="40px">S.No</S.Th>
             <SortHeader field="name" sorts={sorts} onSort={onSort} label="Product Name" />
             <SortHeader field="category" sorts={sorts} onSort={onSort} label="Category" />
             <SortHeader field="price" sorts={sorts} onSort={onSort} label="Price" />
@@ -40,11 +39,12 @@ const ProductTable = ({
         </thead>
         <tbody>
           {products.map((product, index) => {
-            const isStockCritical = product.stock === 0;
+            let stockStatus = 'normal';
+            if (product.stock === 0) stockStatus = 'critical';
+            else if (product.stock <= 10) stockStatus = 'low';
 
             return (
               <tr key={product._id}>
-                <S.Td>{index + 1}</S.Td>
                 <S.Td>
                   <S.ProductCell>
                     {product.images && product.images.length > 0 ? (
@@ -65,15 +65,34 @@ const ProductTable = ({
                   </S.ProductCell>
                 </S.Td>
                 <S.Td>
-                  {product.category ? (
-                    <S.CategoryText>{product.category}</S.CategoryText>
-                  ) : (
-                    <S.CategoryText isUnknown>Unknown</S.CategoryText>
+                  {product.category ? (() => {
+                    const colors = [
+                      { bg: 'var(--badge-green-bg)', text: 'var(--badge-green-text)' },
+                      { bg: 'var(--accent-light)', text: 'var(--accent)' },
+                      { bg: 'var(--badge-amber-bg)', text: 'var(--badge-amber-text)' },
+                      { bg: 'rgba(236, 72, 153, 0.15)', text: '#ec4899' },
+                      { bg: 'rgba(168, 85, 247, 0.15)', text: '#a855f7' },
+                      { bg: 'rgba(14, 165, 233, 0.15)', text: '#0ea5e9' },
+                      { bg: 'rgba(249, 115, 22, 0.15)', text: '#f97316' },
+                    ];
+                    let hash = 0;
+                    for (let i = 0; i < product.category.length; i++) {
+                      hash = product.category.charCodeAt(i) + ((hash << 5) - hash);
+                    }
+                    const color = colors[Math.abs(hash) % colors.length];
+                    
+                    return (
+                      <S.CategoryBadge $bg={color.bg} $text={color.text}>
+                        {product.category}
+                      </S.CategoryBadge>
+                    );
+                  })() : (
+                    <S.CategoryBadge>Unknown</S.CategoryBadge>
                   )}
                 </S.Td>
                 <S.Td>₹{product.price?.toLocaleString("en-IN") || "0.00"}</S.Td>
                 <S.Td>
-                  <S.StockText isCritical={isStockCritical}>
+                  <S.StockText $status={stockStatus}>
                     {product.stock}
                   </S.StockText>
                 </S.Td>

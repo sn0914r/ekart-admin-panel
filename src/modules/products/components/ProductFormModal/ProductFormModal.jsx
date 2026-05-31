@@ -47,7 +47,7 @@ const ProductFormModal = ({ isOpen, onClose, initialData }) => {
             <S.Input
               type="text"
               {...register("name")}
-              placeholder="E.g. Wireless Headphones"
+              placeholder="E.g. Black Shirt"
             />
             {errors.name && <S.ErrorText>{errors.name.message}</S.ErrorText>}
           </S.FormGroup>
@@ -77,7 +77,7 @@ const ProductFormModal = ({ isOpen, onClose, initialData }) => {
 
         <S.FormRow>
           <S.FormGroup>
-            <S.Label>Price Base (₹)</S.Label>
+            <S.Label>Price (₹)</S.Label>
             <S.Input
               type="number"
               step="0.01"
@@ -147,7 +147,7 @@ const ProductFormModal = ({ isOpen, onClose, initialData }) => {
         </S.StatusCheckboxWrapper>
 
         <S.SubmitButton type="submit" disabled={isSubmitting}>
-          {isSubmitting ? "Processing..." : "Submit"}
+          {isSubmitting ? "Processing..." : (isEditing ? "Update Product" : "Create Product")}
         </S.SubmitButton>
       </S.FormWrapper>
     </Modal>
