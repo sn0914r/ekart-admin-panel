@@ -46,7 +46,11 @@ async function parseJSON(response) {
 }
 
 function isTokenExpired(response, data) {
-  return response.status === 401 && data?.errorCode === "INVALID_TOKEN";
+  return (
+    response.status === 401 &&
+    (data?.errorCode === "INVALID_TOKEN" ||
+      (data?.errorCode === "UNAUTHORIZED_ERROR" && data?.message === "Session expired"))
+  );
 }
 
 function isErrorResponse(response, data) {
@@ -106,7 +110,8 @@ async function handleRefreshFlow(endpoint, options) {
     logout();
 
     if (window.location.pathname !== "/auth/login") {
-      window.location.href = "/auth/login";
+      const currentUrl = encodeURIComponent(window.location.pathname + window.location.search);
+      window.location.href = `/auth/login?expired=true&redirectTo=${currentUrl}`;
     }
     throw err;
   }
@@ -133,7 +138,17 @@ const apiClient = async (endpoint, options = {}) => {
 
     // 4. Intercept: Application Errors
     if (isErrorResponse(response, data)) {
-      throw normalizeError(response, data);
+      const error = normalizeError(response, data);
+
+      if (error.code === "UNAUTHORIZED_ERROR") {
+        useAuthStore.getState().logout();
+        if (window.location.pathname !== "/auth/login") {
+          const currentUrl = encodeURIComponent(window.location.pathname + window.location.search);
+          window.location.href = `/auth/login?expired=true&redirectTo=${currentUrl}`;
+        }
+      }
+
+      throw error;
     }
 
     logger.info(`[Success] ${endpoint}`, data);

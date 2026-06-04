@@ -41,7 +41,8 @@ export const useLoginForm = () => {
         } else {
           toast.success("Successfully Logged in");
         }
-        navigate("/");
+        const redirectTo = searchParams.get("redirectTo") || "/";
+        navigate(redirectTo);
       } else {
         toast.error("Access denied. Admin privileges required.");
         navigate("/forbidden");
@@ -53,11 +54,17 @@ export const useLoginForm = () => {
   };
 
   useEffect(() => {
+    if (searchParams.get("expired") === "true") {
+      toast.error("Your session has expired. Please log in again.", {
+        duration: 7000,
+      });
+    }
+
     if (urlEmail && urlPassword) {
       handleLogin({ email: urlEmail, password: urlPassword }, true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchParams]);
 
   return {
     register,
