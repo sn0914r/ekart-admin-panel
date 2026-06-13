@@ -21,7 +21,7 @@ const AppRouter = () => {
       <Route
         path="/*"
         element={
-          <ProtectedRoute requiredRole="admin">
+          <ProtectedRoute allowedRoles={["admin", "demo-admin"]}>
             <MainLayout>
               <Routes>
                 <Route path="/" element={<DashboardRoutes />} />

@@ -35,12 +35,19 @@ export const useLoginForm = () => {
       const token = res?.accessToken ?? "";
       const user = decodeToken(token);
 
-      if (user.role === "admin") {
+      if (user.role === "admin" || user.role === "demo-admin") {
         if (isFromQuery) {
           toast.success(`Admin ${payload.email} received from ${urlSource}`);
         } else {
           toast.success("Successfully Logged in");
         }
+        
+        if (user.role === "demo-admin") {
+          toast.info("You're viewing a demo admin account — all data is read-only. Feel free to explore!", {
+            duration: 10000,
+          });
+        }
+        
         const redirectTo = searchParams.get("redirectTo") || "/";
         navigate(redirectTo);
       } else {

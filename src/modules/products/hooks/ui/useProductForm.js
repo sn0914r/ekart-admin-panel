@@ -87,7 +87,7 @@ export const useProductForm = (initialData, onSuccess) => {
             toast.success("Product updated successfully");
             onSuccess?.();
           },
-          onError: () => toast.error("Failed to update product"),
+          onError: (err) => toast.error(err?.message || "Failed to update product"),
         },
       );
     } else {
@@ -97,7 +97,7 @@ export const useProductForm = (initialData, onSuccess) => {
           onSuccess?.();
           setSelectedFiles([]); // Reset files on success
         },
-        onError: () => toast.error("Failed to add Product"),
+        onError: (err) => toast.error(err?.message || "Failed to add product"),
       });
     }
   };

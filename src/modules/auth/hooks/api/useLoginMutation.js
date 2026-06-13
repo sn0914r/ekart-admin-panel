@@ -12,7 +12,7 @@ export const useLoginMutation = () => {
       const token = accessToken ?? "";
       const user = decodeToken(token);
 
-      if (user.role === "admin") {
+      if (user.role === "admin" || user.role === "demo-admin") {
         setAuth(user, token);
       }
     },

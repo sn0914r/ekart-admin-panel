@@ -76,8 +76,8 @@ export const useProductsPageFlow = () => {
             `Product successfully ${newStatus ? "activated" : "deactivated"}!`,
           );
         },
-        onError: () => {
-          toast.error("Failed to update status");
+        onError: (err) => {
+          toast.error(err?.message || "Failed to update status");
         },
       },
     );
@@ -104,8 +104,8 @@ export const useProductsPageFlow = () => {
           toast.success("Product deleted successfully");
           setProductToDelete(null);
         },
-        onError: () => {
-          toast.error("Failed to delete product");
+        onError: (err) => {
+          toast.error(err?.message || "Failed to delete product");
         },
       });
     }
