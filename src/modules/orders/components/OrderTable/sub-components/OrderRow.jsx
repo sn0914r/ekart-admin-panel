@@ -20,21 +20,21 @@ const OrderRow = ({ order, onView }) => {
       <S.Td>₹{order.subTotal?.toLocaleString("en-IN") || "0.00"}</S.Td>
       <S.Td>
         <S.Badge
-          className={`payment ${order.paymentStatus?.toLowerCase() || "pending"}`}
+          className={`payment ${order.paymentStatus?.toLowerCase().replace(/\s+/g, "-") || "pending"}`}
         >
           {order.paymentStatus || "PENDING"}
         </S.Badge>
       </S.Td>
       <S.Td>
         <S.Badge
-          className={`order ${order.orderStatus?.toLowerCase() || "created"}`}
+          className={`order ${order.orderStatus?.toLowerCase().replace(/\s+/g, "-") || "created"}`}
         >
           {order.orderStatus || "CREATED"}
         </S.Badge>
       </S.Td>
       <S.Td>
         <S.Badge
-          className={`shipping ${order.shippingStatus?.toLowerCase() || "pending"}`}
+          className={`shipping ${order.shippingStatus?.toLowerCase().replace(/\s+/g, "-") || "pending"}`}
         >
           {order.shippingStatus || "PENDING"}
         </S.Badge>

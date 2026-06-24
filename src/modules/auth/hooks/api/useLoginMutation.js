@@ -8,8 +8,8 @@ export const useLoginMutation = () => {
 
   return useMutation({
     mutationFn: (payload) => login(payload),
-    onSuccess: ({ accessToken }) => {
-      const token = accessToken ?? "";
+    onSuccess: ({ data }) => {
+      const token = data?.accessToken ?? "";
       const user = decodeToken(token);
 
       if (user.role === "admin" || user.role === "demo-admin") {

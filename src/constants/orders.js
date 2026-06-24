@@ -8,7 +8,12 @@ export const VALID_SHIPPING_STATUS = [
   "CANCELLED",
 ];
 
-export const VALID_PAYMENT_STATUS = ["PENDING", "PAID"];
+export const VALID_PAYMENT_STATUS = [
+  "PENDING",
+  "PAID",
+  "REFUND PENDING",
+  "REFUNDED",
+];
 
 export const VALID_ORDER_SORT_FIELDS_ADMIN = [
   "orderId",

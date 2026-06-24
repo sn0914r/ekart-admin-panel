@@ -192,9 +192,14 @@ export const Badge = styled.span`
     background: var(--badge-green-bg);
     color: var(--badge-green-text);
   }
-  &.payment.pending {
+  &.payment.pending,
+  &.payment.refund-pending {
     background: var(--badge-amber-bg);
     color: var(--badge-amber-text);
+  }
+  &.payment.refunded {
+    background: var(--surface2);
+    color: var(--text);
   }
 
   /* Shipping Status Variants */

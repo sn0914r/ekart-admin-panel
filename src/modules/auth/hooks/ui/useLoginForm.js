@@ -32,7 +32,7 @@ export const useLoginForm = () => {
   const handleLogin = async (payload, isFromQuery = false) => {
     try {
       const res = await loginAsync(payload);
-      const token = res?.accessToken ?? "";
+      const token = res?.data?.accessToken ?? "";
       const user = decodeToken(token);
 
       if (user.role === "admin" || user.role === "demo-admin") {
