@@ -8,7 +8,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // https://vite.dev/config/
 export default defineConfig({
   server: {
-    allowedHosts: ["https://annette-nondesignate-cryptically.ngrok-free.dev"],
+    allowedHosts: true,
     host: true,
   },
   plugins: [

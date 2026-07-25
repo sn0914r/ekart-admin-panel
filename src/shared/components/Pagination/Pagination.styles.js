@@ -4,7 +4,7 @@ export const PaginationContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 8px;
+  gap: 16px;
   padding: 16px 24px;
   background: var(--surface);
   border-left: 0.5px solid var(--border);
@@ -12,6 +12,12 @@ export const PaginationContainer = styled.div`
   border-bottom: 0.5px solid var(--border);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
+
+  @media (max-width: 640px) {
+    flex-direction: column;
+    justify-content: center;
+    padding: 16px;
+  }
 `;
 
 export const LimitSelectorWrapper = styled.div`
@@ -22,15 +28,21 @@ export const LimitSelectorWrapper = styled.div`
   .limit-label {
     font-size: 13px;
     color: var(--muted);
+    white-space: nowrap;
   }
 `;
 
 export const LimitSelect = styled.select`
-  background: var(--surface2);
+  appearance: none;
+  background-color: var(--surface2);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%239ca3af' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
   border: 1px solid var(--border);
   color: var(--text);
   border-radius: 6px;
-  padding: 0 8px;
+  padding: 0 32px 0 12px;
   height: 32px;
   font-size: 13px;
   cursor: pointer;

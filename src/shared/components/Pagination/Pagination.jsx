@@ -40,7 +40,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange, limit, onLimitChang
       )}
 
       {totalPages > 1 && (
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
           <S.PageButton
             disabled={currentPage === 1}
             onClick={() => onPageChange(currentPage - 1)}

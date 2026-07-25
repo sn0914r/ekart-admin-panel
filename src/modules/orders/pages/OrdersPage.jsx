@@ -40,9 +40,7 @@ const OrdersPage = () => {
         />
 
         {isLoading ? (
-          <div style={{ display: "flex", justifyContent: "center", padding: "60px 0" }}>
-            <Loader />
-          </div>
+          <Loader />
         ) : isError ? (
           <ErrorState 
             title="Failed to load orders" 

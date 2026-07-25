@@ -2,8 +2,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@app/store/authStore";
 import { useThemeStore } from "@app/store/useThemeStore";
 import { useLogoutMutation } from "@modules/auth/hooks/api/useLogoutMutation";
-import logoWhiteImg from "../../../assets/logo-white.png";
-import logoDarkImg from "../../../assets/logo-dark.png";
 import {
   BarChart2,
   ShoppingCart,
@@ -11,10 +9,16 @@ import {
   LogOut,
   LogIn,
   PieChart,
+  CircleUser,
 } from "lucide-react";
 import {
   SidebarContainer,
-  SidebarLogoBlock,
+  SidebarProfileBlock,
+  ProfileIconWrapper,
+  ProfileInfo,
+  ProfileName,
+  ProfileEmail,
+  ProfileRole,
   NavList,
   NavSectionLabel,
   StyledNavLink,
@@ -30,18 +34,18 @@ const Sidebar = ({ isOpen }) => {
   const { mutate: mutateLogout } = useLogoutMutation();
   return (
     <SidebarContainer isOpen={isOpen}>
-      <SidebarLogoBlock>
-        <img
-          src={isDark ? logoWhiteImg : logoDarkImg}
-          alt="eKart Logo"
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "contain",
-            transform: "scale(1.8)", // Zoom in to crop out the empty transparent space
-          }}
-        />
-      </SidebarLogoBlock>
+      <SidebarProfileBlock>
+        <ProfileIconWrapper>
+          <CircleUser />
+        </ProfileIconWrapper>
+        <ProfileInfo>
+          <ProfileName>{user?.name || "Admin User"}</ProfileName>
+          <ProfileEmail>{user?.email || "admin@ekart.com"}</ProfileEmail>
+          <ProfileRole>
+            {user?.role === "demo-admin" ? "Demo Admin" : "Admin"}
+          </ProfileRole>
+        </ProfileInfo>
+      </SidebarProfileBlock>
 
       <NavList>
         <NavSectionLabel>MAIN</NavSectionLabel>
@@ -61,8 +65,8 @@ const Sidebar = ({ isOpen }) => {
           <PieChart />
           <span>Analytics</span>
         </StyledNavLink>
-        {/* 
-        <NavSectionLabel style={{ marginTop: "16px" }}>SYSTEM</NavSectionLabel>
+
+        {/* <NavSectionLabel style={{ marginTop: "16px" }}>SYSTEM</NavSectionLabel>
         <StyledNavLink to="/settings">
           <Settings />
           <span>Settings</span>

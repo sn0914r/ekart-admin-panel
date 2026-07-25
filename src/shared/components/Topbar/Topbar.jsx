@@ -5,10 +5,11 @@ import {
   TopbarContainer,
   TopbarLeft,
   ToggleButton,
+  SidebarToggleButton,
   TopbarTitleBlock,
   TopbarTitle,
   TopbarSubtitle,
-  TopbarRight
+  TopbarRight,
 } from "./Topbar.styles";
 
 const Topbar = ({ toggleSidebar, subtitle }) => {
@@ -28,9 +29,12 @@ const Topbar = ({ toggleSidebar, subtitle }) => {
   return (
     <TopbarContainer>
       <TopbarLeft>
-        <ToggleButton onClick={toggleSidebar} aria-label="Toggle Sidebar">
+        <SidebarToggleButton
+          onClick={toggleSidebar}
+          aria-label="Toggle Sidebar"
+        >
           <Menu size={20} />
-        </ToggleButton>
+        </SidebarToggleButton>
         <TopbarTitleBlock>
           <TopbarTitle>{title}</TopbarTitle>
           {subtitle && <TopbarSubtitle>{subtitle}</TopbarSubtitle>}

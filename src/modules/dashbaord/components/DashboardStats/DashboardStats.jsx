@@ -1,5 +1,5 @@
 import * as S from "./DashboardStats.styles";
-import { CircleDollarSign, ShoppingBag, Clock4, AlertTriangle } from "lucide-react";
+import { Wallet, Package, Timer, BellRing } from "lucide-react";
 
 const DashboardStats = ({ stats }) => {
   return (
@@ -12,7 +12,7 @@ const DashboardStats = ({ stats }) => {
             boxShadow: "0 4px 10px rgba(67, 56, 202, 0.15)",
           }}
         >
-          <CircleDollarSign />
+          <Wallet />
         </S.StatIcon>
         <S.StatNumber>
           ₹{stats?.totalRevenue?.toLocaleString() || 0}
@@ -28,7 +28,7 @@ const DashboardStats = ({ stats }) => {
             boxShadow: "0 4px 10px rgba(21, 128, 61, 0.15)",
           }}
         >
-          <ShoppingBag />
+          <Package />
         </S.StatIcon>
         <S.StatNumber>{stats?.totalOrders || 0}</S.StatNumber>
         <S.StatLabel>Total Orders</S.StatLabel>
@@ -42,7 +42,7 @@ const DashboardStats = ({ stats }) => {
             boxShadow: "0 4px 10px rgba(161, 98, 7, 0.15)",
           }}
         >
-          <Clock4 />
+          <Timer />
         </S.StatIcon>
         <S.StatNumber>{stats?.pendingOrders || 0}</S.StatNumber>
         <S.StatLabel>Pending Orders</S.StatLabel>
@@ -56,7 +56,7 @@ const DashboardStats = ({ stats }) => {
             boxShadow: "0 4px 10px rgba(185, 28, 28, 0.15)",
           }}
         >
-          <AlertTriangle />
+          <BellRing />
         </S.StatIcon>
         <S.StatNumber>{stats?.lowStockCount || 0}</S.StatNumber>
         <S.StatLabel>Low Stock Alerts</S.StatLabel>

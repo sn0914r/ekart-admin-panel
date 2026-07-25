@@ -33,6 +33,12 @@ export const ToggleButton = styled.button`
   }
 `;
 
+export const SidebarToggleButton = styled(ToggleButton)`
+  @media (min-width: 992px) {
+    display: none;
+  }
+`;
+
 export const TopbarTitleBlock = styled.div`
   display: flex;
   flex-direction: column;

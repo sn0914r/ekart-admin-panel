@@ -35,15 +35,23 @@ export const Table = styled.table`
     font-size: 11px;
     font-weight: 400;
     color: var(--muted);
-    padding-bottom: 8px;
+    padding: 8px 12px;
     border-bottom: 0.5px solid var(--border);
+    white-space: nowrap;
   }
 
   td {
-    padding: 16px 0;
+    padding: 10px 12px;
     border-bottom: 0.5px solid var(--border);
     color: var(--text);
     vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  /* Allow the product name column to wrap if needed but keep a min-width */
+  td:nth-of-type(2) {
+    white-space: normal;
+    min-width: 200px;
   }
 
   tr {

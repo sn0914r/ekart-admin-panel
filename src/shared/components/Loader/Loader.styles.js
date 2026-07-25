@@ -24,6 +24,9 @@ export const LoaderWrapper = styled.div`
   align-items: center;
   justify-content: center;
   padding: 24px;
+  flex: 1;
+  width: 100%;
+  height: 100%;
   
   ${({ $fullScreen }) => $fullScreen && `
     position: fixed;

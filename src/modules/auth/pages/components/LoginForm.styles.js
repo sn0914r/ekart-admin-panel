@@ -1,40 +1,6 @@
 import styled from "@emotion/styled";
 import loginSplash from "@assets/login-splash.png";
 
-export const LoginWrapper = styled.div`
-  display: flex;
-  min-height: 100vh;
-  background: var(--bg);
-`;
-
-export const SplashSection = styled.div`
-  flex: 1;
-  display: none;
-  background-image: url(${loginSplash});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  border-right: 1px solid var(--border);
-
-  @media (min-width: 768px) {
-    display: block;
-  }
-`;
-
-export const FormSection = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 32px;
-  position: relative;
-  justify-content: center;
-
-  @media (min-width: 768px) {
-    padding: 64px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-`;
 
 export const ThemeToggle = styled.button`
   position: absolute;

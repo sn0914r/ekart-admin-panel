@@ -8,35 +8,66 @@ export const SidebarContainer = styled.aside`
   padding: 0;
   overflow: hidden;
   transition: width 0.3s ease;
-  width: ${({ isOpen }) => (isOpen ? "220px" : "0px")};
+  width: ${({ isOpen }) => (isOpen ? "240px" : "0px")};
   white-space: nowrap;
 `;
 
-export const SidebarLogoBlock = styled.div`
-  padding: 10px;
+export const SidebarProfileBlock = styled.div`
+  padding: 32px 24px 24px;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 12px;
-  aspect-ratio: 16/9;
-  overflow: hidden;
 `;
 
-export const SidebarLogoIcon = styled.div`
-  width: 32px;
-  height: 32px;
-  background: var(--accent);
-  border-radius: 8px;
+export const ProfileIconWrapper = styled.div`
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--surface2);
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
+  color: var(--muted);
+  
+  svg {
+    width: 36px;
+    height: 36px;
+    stroke-width: 1.5;
+  }
 `;
 
-export const SidebarLogoName = styled.span`
-  font-size: 18px;
-  font-weight: 700;
+export const ProfileInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+`;
+
+export const ProfileName = styled.div`
+  font-size: 15px;
+  font-weight: 600;
   color: var(--text);
-  letter-spacing: -0.02em;
+`;
+
+export const ProfileEmail = styled.div`
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted);
+  margin-top: -4px;
+  margin-bottom: 4px;
+`;
+
+export const ProfileRole = styled.div`
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--accent-light);
+  padding: 4px 10px;
+  border-radius: 12px;
 `;
 
 export const NavList = styled.nav`

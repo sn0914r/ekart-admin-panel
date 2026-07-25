@@ -2,12 +2,22 @@ import styled from "@emotion/styled";
 
 export const StatsGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-bottom: 16px;
 
+  /* Target the 3rd card to span 2 columns on mobile */
+  & > div:nth-of-type(3) {
+    grid-column: span 2;
+  }
+
   @media (min-width: 768px) {
     grid-template-columns: repeat(3, 1fr);
+    
+    /* Reset the 3rd card to span 1 column on desktop */
+    & > div:nth-of-type(3) {
+      grid-column: span 1;
+    }
   }
 `;
 
