@@ -4,17 +4,17 @@ Admin dashboard for managing products, orders, inventory, and analytics in the e
 
 ## Live Demo
 
-https://ekart-admin-dashboard.pages.dev/
+- **Admin Panel:** https://ekart-admin-dashboard.pages.dev/
+- **System Overview & Credentials:** https://ekart-system.pages.dev/ (Contains project info, GitHub links for all eKart services, and credential-loaded URLs for easy testing)
 
 ---
 
 ## Related Repositories
 
-| Repository     | URL                                       |
-| :------------- | :---------------------------------------- |
-| eKart Frontend | https://github.com/sn0914r/ekart-frontend |
-| eKart Backend  | https://github.com/sn0914r/ekart-backend  |
-| eKart System   | https://github.com/sn0914r/eKart-system   |
+- [eKart Frontend](https://github.com/sn0914r/ekart-frontend)
+- [eKart Backend](https://github.com/sn0914r/ekart-backend)
+- [Payment Orchestration Engine](https://github.com/sn0914r/payment-orchestration-engine)
+- [Email Worker Service](https://github.com/sn0914r/email-worker-service)
 
 ---
 
@@ -55,31 +55,13 @@ https://ekart-admin-dashboard.pages.dev/
 
 ## Tech Stack
 
-### Frontend
-
-- React
-- Vite
-- React Router
-
-### State Management & Data Fetching
-
-- Zustand
-- TanStack Query
-
-### Forms & Validation
-
-- React Hook Form
-- Zod
-
-### UI & Styling
-
-- Bootstrap
-- Emotion
-- Lucide React
-
-### Charts
-
-- Recharts
+| Category | Technology |
+|----------|------------|
+| Frontend | React, Vite, React Router |
+| State Management & Data Fetching | Zustand, TanStack Query |
+| Forms & Validation | React Hook Form, Zod |
+| UI & Styling | Bootstrap, Emotion, Lucide React |
+| Charts | Recharts |
 
 ---
 
@@ -90,25 +72,34 @@ src/
 ├── app/
 │   ├── pages/
 │   ├── store/
+│   ├── App.css
+│   ├── App.jsx
 │   ├── AppRouter.jsx
 │   └── Providers.jsx
 │
-├── modules/
-│   ├── analytics/
-│   ├── auth/
-│   ├── dashboard/
-│   ├── orders/
-│   └── products/
+├── assets/
 │
-├── shared/
-│   ├── components/
-│   └── layout/
+├── constants/
 │
 ├── lib/
 │   ├── apiClient.js
 │   └── queryClient.js
 │
-└── utils/
+├── modules/
+│   ├── analytics/
+│   ├── auth/
+│   ├── dashbaord/
+│   ├── orders/
+│   └── products/
+│
+├── shared/
+│   ├── components/
+│   ├── hooks/
+│   └── layout/
+│
+├── utils/
+│
+└── main.jsx
 ```
 
 ---
@@ -142,31 +133,31 @@ npm run dev
 
 ### Login
 
-![Login](./screenshots/login.webp)
+![Login](./screenshots/login.png)
 
 ### Dashboard
 
-![Dashboard](./screenshots/dashboard.webp)
+![Dashboard](./screenshots/dashboard.png)
 
 ### Products
 
-![Products](./screenshots/products.webp)
+![Products](./screenshots/products.png)
 
 ### Add Product
 
-![Add Product](./screenshots/add-product.webp)
+![Add Product](./screenshots/add-product.png)
 
 ### Orders
 
-![Orders](./screenshots/orders.webp)
+![Orders](./screenshots/orders.png)
 
 ### Order Details
 
-![Order Details](./screenshots/order-details.webp)
+![Order Details](./screenshots/order-details.png)
 
 ### Analytics
 
-![Analytics](./screenshots/analytics-dark.webp)
+![Analytics](./screenshots/analytics.png)
 
 ---
 

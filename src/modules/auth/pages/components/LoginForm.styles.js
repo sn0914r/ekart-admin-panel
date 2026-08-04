@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import loginSplash from "@assets/login-splash.png";
 
-
 export const ThemeToggle = styled.button`
   position: absolute;
   top: 32px;
