@@ -160,13 +160,18 @@ export const ProductSubtext = styled.div`
 
 export const CategoryBadge = styled.span`
   text-transform: capitalize;
-  font-size: 10px;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 3px 10px;
+  border-radius: 9999px;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: ${(props) => props.$bg || "var(--surface2)"};
   color: ${(props) => props.$text || "var(--muted)"};
+  border: 1px solid ${(props) => props.$border || "transparent"};
+  white-space: nowrap;
 `;
 
 export const StockText = styled.span`

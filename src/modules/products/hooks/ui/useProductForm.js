@@ -22,7 +22,7 @@ export const useProductForm = (initialData, onSuccess) => {
     stock: 0,
     isActive: true,
     description: "",
-    category: "Shirts",
+    category: "",
     attributes: {
       color: "",
       size: [],
@@ -64,10 +64,7 @@ export const useProductForm = (initialData, onSuccess) => {
         stock: initialData.stock || "",
         isActive: initialData.isActive ?? true,
         description: initialData.description || "",
-        category: initialData.category
-          ? initialData.category.charAt(0).toUpperCase() +
-            initialData.category.slice(1)
-          : "Shirts",
+        category: initialData.category ? initialData.category.toLowerCase() : "",
         attributes: {
           color: initialData.attributes?.color || "",
           size: initialData.attributes?.size || [],

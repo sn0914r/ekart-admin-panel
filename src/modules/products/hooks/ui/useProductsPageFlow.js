@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useGetProductsQuery } from "../api/useGetProductsQuery";
+import { useGetProductMetaQuery } from "../api/useGetProductMetaQuery";
 import { useDeleteProductMutation } from "../api/useDeleteProductMutation";
 import { useUpdateProductMutation } from "../api/useUpdateProductMutation";
 import { toast } from "sonner";
@@ -14,7 +15,10 @@ export const useProductsPageFlow = () => {
   const [filters, setFilters] = useState({
     status: "",
     stockStatus: "",
+    category: "",
   });
+
+  const { data: productMeta } = useGetProductMetaQuery();
 
   const [sorts, setSorts] = useState([]);
 
@@ -141,5 +145,6 @@ export const useProductsPageFlow = () => {
     handleFilterChange,
     sorts,
     handleSort,
+    productMeta,
   };
 };

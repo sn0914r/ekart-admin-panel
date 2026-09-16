@@ -36,6 +36,7 @@ const ProductsPage = () => {
     handleFilterChange,
     sorts,
     handleSort,
+    productMeta,
   } = useProductsPageFlow();
 
   return (
@@ -59,12 +60,34 @@ const ProductsPage = () => {
             />
 
             <S.FilterSelect
+              value={filters.category}
+              onChange={(e) => handleFilterChange("category", e.target.value)}
+            >
+              <option value="">All Categories</option>
+              {productMeta?.categories?.map((cat) => (
+                <option key={cat.value} value={cat.value}>
+                  {cat.label}
+                </option>
+              ))}
+            </S.FilterSelect>
+
+            <S.FilterSelect
               value={filters.status}
               onChange={(e) => handleFilterChange("status", e.target.value)}
             >
               <option value="">All Statuses</option>
-              <option value="ACTIVE">Active</option>
-              <option value="NOT_ACTIVE">Not Active</option>
+              {productMeta?.productStatuses
+                ? productMeta.productStatuses.map((st) => (
+                    <option key={st.value} value={st.value}>
+                      {st.label}
+                    </option>
+                  ))
+                : (
+                  <>
+                    <option value="ACTIVE">Active</option>
+                    <option value="NOT_ACTIVE">Not Active</option>
+                  </>
+                )}
             </S.FilterSelect>
 
             <S.FilterSelect
@@ -74,9 +97,19 @@ const ProductsPage = () => {
               }
             >
               <option value="">All Stock</option>
-              <option value="IN_STOCK">In Stock</option>
-              <option value="LOW_STOCK">Low Stock</option>
-              <option value="OUT_OF_STOCK">Out of Stock</option>
+              {productMeta?.stockStatuses
+                ? productMeta.stockStatuses.map((st) => (
+                    <option key={st.value} value={st.value}>
+                      {st.label}
+                    </option>
+                  ))
+                : (
+                  <>
+                    <option value="IN_STOCK">In Stock</option>
+                    <option value="LOW_STOCK">Low Stock</option>
+                    <option value="OUT_OF_STOCK">Out of Stock</option>
+                  </>
+                )}
             </S.FilterSelect>
 
             <S.AddButton onClick={handleAdd}>

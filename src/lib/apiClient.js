@@ -102,7 +102,7 @@ async function handleRefreshFlow(endpoint, options) {
 
       return apiClient(endpoint, options);
     } else {
-      throw new Error(data?.message || "Refresh failed");
+      throw new Error(responseBody?.message || "Refresh failed");
     }
   } catch (err) {
     logger.error("Session refresh failed", err);

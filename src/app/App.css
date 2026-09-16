@@ -18,6 +18,19 @@
   --badge-amber-text: #854d0e;
   --badge-red-bg:     #fee2e2;
   --badge-red-text:   #991b1b;
+
+  /* category badge colors (light mode) */
+  --badge-topwear-bg:     #e0e7ff;
+  --badge-topwear-text:   #3730a3;
+  --badge-topwear-border: #c7d2fe;
+
+  --badge-bottomwear-bg:     #d1fae5;
+  --badge-bottomwear-text:   #065f46;
+  --badge-bottomwear-border: #a7f3d0;
+
+  --badge-footwear-bg:     #fef3c7;
+  --badge-footwear-text:   #92400e;
+  --badge-footwear-border: #fde68a;
 }
 
 /* ── Dark mode ── */
@@ -38,6 +51,19 @@
   --badge-amber-text: #fcd34d;
   --badge-red-bg:     #450a0a;
   --badge-red-text:   #fca5a5;
+
+  /* category badge colors (dark mode) */
+  --badge-topwear-bg:     rgba(99, 102, 241, 0.15);
+  --badge-topwear-text:   #a5b4fc;
+  --badge-topwear-border: rgba(99, 102, 241, 0.35);
+
+  --badge-bottomwear-bg:     rgba(16, 185, 129, 0.15);
+  --badge-bottomwear-text:   #6ee7b7;
+  --badge-bottomwear-border: rgba(16, 185, 129, 0.35);
+
+  --badge-footwear-bg:     rgba(245, 158, 11, 0.15);
+  --badge-footwear-text:   #fcd34d;
+  --badge-footwear-border: rgba(245, 158, 11, 0.35);
 }
 
 body {

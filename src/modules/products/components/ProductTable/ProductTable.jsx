@@ -1,6 +1,7 @@
 import { Edit2, Trash2, PackageOpen } from "lucide-react";
 import * as S from "./ProductTable.styles";
 import SortHeader from "./sub-components/SortHeader";
+import { getCategoryBadgeColors } from "../../constants/categoryColors";
 
 const ProductTable = ({
   products,
@@ -38,7 +39,7 @@ const ProductTable = ({
           </tr>
         </thead>
         <tbody>
-          {products.map((product, index) => {
+          {products.map((product) => {
             let stockStatus = 'normal';
             if (product.stock === 0) stockStatus = 'critical';
             else if (product.stock <= 10) stockStatus = 'low';
@@ -66,23 +67,9 @@ const ProductTable = ({
                 </S.Td>
                 <S.Td>
                   {product.category ? (() => {
-                    const colors = [
-                      { bg: 'var(--badge-green-bg)', text: 'var(--badge-green-text)' },
-                      { bg: 'var(--accent-light)', text: 'var(--accent)' },
-                      { bg: 'var(--badge-amber-bg)', text: 'var(--badge-amber-text)' },
-                      { bg: 'rgba(236, 72, 153, 0.15)', text: '#ec4899' },
-                      { bg: 'rgba(168, 85, 247, 0.15)', text: '#a855f7' },
-                      { bg: 'rgba(14, 165, 233, 0.15)', text: '#0ea5e9' },
-                      { bg: 'rgba(249, 115, 22, 0.15)', text: '#f97316' },
-                    ];
-                    let hash = 0;
-                    for (let i = 0; i < product.category.length; i++) {
-                      hash = product.category.charCodeAt(i) + ((hash << 5) - hash);
-                    }
-                    const color = colors[Math.abs(hash) % colors.length];
-                    
+                    const color = getCategoryBadgeColors(product.category);
                     return (
-                      <S.CategoryBadge $bg={color.bg} $text={color.text}>
+                      <S.CategoryBadge $bg={color.bg} $text={color.text} $border={color.border}>
                         {product.category}
                       </S.CategoryBadge>
                     );

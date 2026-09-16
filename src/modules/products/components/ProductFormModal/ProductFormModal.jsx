@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useProductForm } from "@modules/products/hooks/ui/useProductForm";
+import { useGetProductMetaQuery } from "@modules/products/hooks/api/useGetProductMetaQuery";
 import Modal from "@shared/components/Modal/Modal";
 import SizeSelector from "./sub-components/SizeSelector";
 import ImageUploader from "./sub-components/ImageUploader";
@@ -7,6 +8,9 @@ import LockedNotification from "./sub-components/LockedNotification";
 import * as S from "./ProductFormModal.styles";
 
 const ProductFormModal = ({ isOpen, onClose, initialData }) => {
+  const { data: meta } = useGetProductMetaQuery();
+  const categories = meta?.categories || [];
+
   const {
     register,
     handleSubmit,
@@ -54,9 +58,12 @@ const ProductFormModal = ({ isOpen, onClose, initialData }) => {
           <S.FormGroup flex={1}>
             <S.Label>Category</S.Label>
             <S.Select {...register("category")}>
-              <option value="Shirts">Shirts</option>
-              <option value="Pants">Pants</option>
-              <option value="Shoes">Shoes</option>
+              <option value="">Select Category</option>
+              {categories.map((cat) => (
+                <option key={cat.value} value={cat.value}>
+                  {cat.label}
+                </option>
+              ))}
             </S.Select>
             {errors.category && (
               <S.ErrorText>{errors.category.message}</S.ErrorText>

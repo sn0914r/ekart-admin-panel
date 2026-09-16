@@ -1,7 +1,15 @@
 import api from "@lib/apiClient";
 
 export const getProducts = async (queryParams = {}) => {
-  const { page = 1, limit = 10, search = "", status = "", stockStatus = "", sort = "" } = queryParams;
+  const {
+    page = 1,
+    limit = 10,
+    search = "",
+    status = "",
+    stockStatus = "",
+    sort = "",
+    category = "",
+  } = queryParams;
   const urlParams = new URLSearchParams({ page, limit });
   if (search) {
     urlParams.append("search", search);
@@ -12,11 +20,20 @@ export const getProducts = async (queryParams = {}) => {
   if (stockStatus) {
     urlParams.append("stockStatus", stockStatus);
   }
+  if (category) {
+    urlParams.append("category", category);
+  }
   if (sort) {
     urlParams.append("sort", sort);
   }
   const queryString = urlParams.toString();
   return await api(`/admin/products?${queryString}`, {
+    method: "GET",
+  });
+};
+
+export const getProductMeta = async () => {
+  return await api("/products/meta", {
     method: "GET",
   });
 };
@@ -42,7 +59,7 @@ export const createProduct = async (payload) => {
 
   return await api("/admin/products", {
     method: "POST",
-    body: formData
+    body: formData,
   });
 };
 
