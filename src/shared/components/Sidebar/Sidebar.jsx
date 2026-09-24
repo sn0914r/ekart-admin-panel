@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@app/store/authStore";
-import { useThemeStore } from "@app/store/useThemeStore";
 import { useLogoutMutation } from "@modules/auth/hooks/api/useLogoutMutation";
 import {
   BarChart2,
   ShoppingCart,
   Package,
+  Users,
   LogOut,
   LogIn,
   PieChart,
@@ -29,7 +29,6 @@ import {
 
 const Sidebar = ({ isOpen }) => {
   const user = useAuthStore((state) => state.user);
-  const isDark = useThemeStore((state) => state.isDark);
   const navigate = useNavigate();
   const { mutate: mutateLogout } = useLogoutMutation();
   return (
@@ -60,6 +59,10 @@ const Sidebar = ({ isOpen }) => {
         <StyledNavLink to="/products">
           <Package />
           <span>Products</span>
+        </StyledNavLink>
+        <StyledNavLink to="/users">
+          <Users />
+          <span>Users</span>
         </StyledNavLink>
         <StyledNavLink to="/analytics">
           <PieChart />

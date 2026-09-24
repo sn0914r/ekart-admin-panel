@@ -5,6 +5,7 @@ import AuthRoutes from "../modules/auth/AuthRoutes";
 import OrderRoutes from "../modules/orders/OrderRoutes";
 import DashboardRoutes from "../modules/dashbaord/DashboardRoutes";
 import AnalyticsRoute from "../modules/analytics/AnalyticsRoute";
+import UserRoutes from "../modules/users/UserRoutes";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import ForbiddenPage from "./pages/ForbiddenPage/ForbiddenPage";
 import ProtectedRoute from "../shared/components/ProtectedRoute";
@@ -27,6 +28,7 @@ const AppRouter = () => {
                 <Route path="/" element={<DashboardRoutes />} />
                 <Route path="/products/*" element={<ProductsRoutes />} />
                 <Route path="/orders/*" element={<OrderRoutes />} />
+                <Route path="/users/*" element={<UserRoutes />} />
                 <Route path="/analytics/*" element={<AnalyticsRoute />} />
                 <Route path="*" element={<NotFoundPage />} />
               </Routes>
