@@ -17,6 +17,7 @@ import { ROLE_LABELS, isSameUser } from "../../constants/userRoles";
 import { RoleBadge, StatusBadge, IdText } from "../UsersTable/UsersTable.styles";
 import { useGetUserByIdQuery } from "../../hooks/api/useGetUserByIdQuery";
 import { useAuthStore } from "@app/store/authStore";
+import { useDocumentTitle } from "@shared/hooks/useDocumentTitle";
 
 const formatDate = (dateString) => {
   if (!dateString) return "—";
@@ -52,10 +53,13 @@ const UserDetailsModal = ({
   const currentAuthUser = useAuthStore((state) => state.user);
   const { data: response, isLoading, isError, error } = useGetUserByIdQuery(userId);
 
-  if (!isOpen) return null;
-
   const detailData = response?.data;
   const user = detailData?.user;
+
+  useDocumentTitle(isOpen && user?.name ? `${user.name} — Profile` : null);
+
+  if (!isOpen) return null;
+
   const stats = detailData?.stats || {
     totalOrders: 0,
     totalSpent: 0,

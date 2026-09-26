@@ -1,6 +1,7 @@
 import { Menu, Moon, Sun } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { useThemeStore } from "@app/store/useThemeStore";
+import { getPageTitle } from "@constants/routes";
 import {
   TopbarContainer,
   TopbarLeft,
@@ -12,19 +13,11 @@ import {
   TopbarRight,
 } from "./Topbar.styles";
 
-const Topbar = ({ toggleSidebar, subtitle }) => {
+const Topbar = ({ toggleSidebar, subtitle, title: customTitle }) => {
   const { isDark, toggleTheme } = useThemeStore();
   const location = useLocation();
 
-  const getPageTitle = () => {
-    const path = location.pathname;
-    if (path.startsWith("/analytics")) return "Analytics";
-    if (path.startsWith("/products")) return "Products";
-    if (path.startsWith("/orders")) return "Orders";
-    return "Dashboard";
-  };
-
-  const title = getPageTitle();
+  const title = customTitle || getPageTitle(location.pathname);
 
   return (
     <TopbarContainer>

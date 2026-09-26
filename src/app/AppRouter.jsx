@@ -10,8 +10,10 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import ForbiddenPage from "./pages/ForbiddenPage/ForbiddenPage";
 import ProtectedRoute from "../shared/components/ProtectedRoute";
 import { useAuthStore } from "@app/store/authStore";
+import { useDynamicDocumentTitle } from "@shared/hooks/useDynamicDocumentTitle";
 
 const AppRouter = () => {
+  useDynamicDocumentTitle();
   const isHydrated = useAuthStore((state) => state.isHydrated);
 
   if (!isHydrated) return null;
